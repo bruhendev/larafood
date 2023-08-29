@@ -9,7 +9,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <form action="" method="POST" class="form form-inline">
+            <form action="{{ route('plans.search') }}" method="POST" class="form form-inline">
                 @csrf
                 <input type="text" name="filter" placeholder="Nome" class="form-control"
                     value="{{ $filters['filter'] ?? '' }}">

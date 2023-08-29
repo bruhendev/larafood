@@ -28,7 +28,7 @@ class PlanController extends Controller
         return view('admin.pages.plans.create');
     }
 
-    function store(Request $request)
+    public function store(Request $request)
     {
         $data = $request->all();
         $data['url'] = Str::slug($request->name);
@@ -38,7 +38,7 @@ class PlanController extends Controller
         return redirect()->route('plans.index');
     }
 
-    function show($url)
+    public function show($url)
     {
         $plan = $this->repository->where('url', $url)->first();
 
@@ -49,7 +49,7 @@ class PlanController extends Controller
         return view('admin.pages.plans.show', compact('plan'));
     }
 
-    function destroy($url)
+    public function destroy($url)
     {
         $plan = $this->repository->where('url', $url)->first();
 
@@ -60,5 +60,14 @@ class PlanController extends Controller
         $plan->delete();
 
         return redirect()->route('plans.index');
+    }
+
+    public function search(Request $request) {
+
+        $filters = $request->all();
+
+        $plans = $this->repository->search($request->filter);
+
+        return view('admin.pages.plans.index', ['plans' => $plans, 'filters' => $filters]);
     }
 }

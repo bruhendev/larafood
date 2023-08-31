@@ -1,10 +1,18 @@
 <?php
 
+use App\Http\Controllers\Admin\ACL\ProfileController;
 use App\Http\Controllers\Admin\DetailPlanController;
 use App\Http\Controllers\Admin\PlanController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
+
+    /**
+     * Routes Profiles
+     */
+    Route::any('profiles/search', [ProfileController::class, 'search'])->name('profiles.search');
+    Route::resource('profiles', ProfileController::class);
+
     /**
      * Routes Details Plans
      */
@@ -27,7 +35,7 @@ Route::prefix('admin')->group(function () {
     Route::delete('plans/{url}', [PlanController::class, 'destroy'])->name('plans.destroy');
     Route::get('plans/{url}', [PlanController::class, 'show'])->name('plans.show');
     Route::put('plans/{url}', [PlanController::class, 'update'])->name('plans.update');
-    
+
     Route::get('admin', [PlanController::class, 'index'])->name('admin.index');
 });
 

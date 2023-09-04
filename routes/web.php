@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ACL\PlanProfileController;
 use App\Http\Controllers\Admin\ACL\ProfileController;
 use App\Http\Controllers\Admin\DetailPlanController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
@@ -45,12 +46,12 @@ Route::prefix('admin')
         /**
          * Routes Details Plans
          */
+        Route::get('plans/{url}/details/create', [DetailPlanController::class, 'create'])->name('details.plan.create');
+        Route::post('plans/{url}/details', [DetailPlanController::class, 'store'])->name('details.plan.store');
         Route::delete('plans/{url}/details/{idPlan}', [DetailPlanController::class, 'destroy'])->name('details.plan.destroy');
         Route::get('plans/{url}/details/{idPlan}', [DetailPlanController::class, 'show'])->name('details.plan.show');
         Route::put('plans/{url}/details/{idPlan}', [DetailPlanController::class, 'update'])->name('details.plan.update');
         Route::get('plans/{url}/details/{idPlan}/edit', [DetailPlanController::class, 'edit'])->name('details.plan.edit');
-        Route::post('plans/{url}/details', [DetailPlanController::class, 'store'])->name('details.plan.store');
-        Route::get('plans/{url}/details/create', [DetailPlanController::class, 'create'])->name('details.plan.create');
         Route::get('plans/{url}/details', [DetailPlanController::class, 'index'])->name('details.plan.index');
 
         /**
@@ -68,8 +69,6 @@ Route::prefix('admin')
         Route::get('admin', [PlanController::class, 'index'])->name('admin.index');
     });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [SiteController::class, 'index'])->name('site.home');
 
 Auth::routes();
